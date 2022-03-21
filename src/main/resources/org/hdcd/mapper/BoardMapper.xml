@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.hdcd.mapper.BoardMapper">
+
+	<insert id="create">
+		INSERT INTO board
+			 (
+			   title,
+			   content,
+			   writer,
+			   picture_url,
+			   preview_url
+			 )
+		VALUES
+			 (
+			   #{title},
+			   #{content},
+			   #{writer},
+			   #{pictureUrl},
+			   #{previewUrl}
+			 )
+	</insert>
+
+	<select id="read" resultType="Board">
+		SELECT board_no, 
+			   title,
+			   content,
+			   writer,
+			   reg_date,
+			   view_cnt,
+			   picture_url,
+			   preview_url
+		  FROM board
+		 WHERE board_no = #{boardNo}
+	</select>
+
+	<update id="update">
+		UPDATE board
+		   SET title =#{title},
+			   content =#{content},
+			   picture_url = #{pictureUrl},
+		   	   preview_url = #{previewUrl}
+		 WHERE board_no = #{boardNo}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM board
+		 WHERE board_no = #{boardNo}
+	</delete>
+
+	<select id="list" resultType="Board">
+	 <![CDATA[
+	 	SELECT board_no,
+	 		   title,
+	 		   content,
+	 		   writer,
+			   view_cnt, 
+	 		   reg_date,
+			   picture_url,
+	 		   preview_url
+	 	  FROM board 
+	 	 WHERE board_no > 0
+	 	 ]]>
+
+	 	 <include refid="search"></include>
+	 	 
+		<![CDATA[
+	  ORDER BY board_no DESC,
+	  		   reg_date DESC
+		 LIMIT #{pageStart}, #{sizePerPage}
+		]]>
+	</select>
+	
+	<select id="count" resultType="int">
+		<![CDATA[
+	 	SELECT count(board_no) 
+		  FROM board 
+		 WHERE board_no > 0 
+		]]>
+		
+		<include refid="search"></include>
+	</select>
+
+	<select id="getPicture" resultType="String">
+		SELECT picture_url 
+		 FROM board 
+		 WHERE board_no = #{boardNo}
+	</select>
+
+	<select id="getPreview" resultType="String">
+		SELECT preview_url 
+		  FROM board 
+		 WHERE board_no = #{boardNo}
+	</select>
+
+	<update id="updateViewCnt">
+		UPDATE board
+		   SET view_cnt = view_cnt + 1
+		 WHERE board_no = #{boardNo}
+	</update>
+	
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				AND title LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'w'.toString()">
+				AND writer LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'tc'.toString()">
+				AND (	title LIKE CONCAT('%', #{keyword}, '%')
+						OR content LIKE CONCAT('%', #{keyword}, '%'))
+			</if>
+		</if>
+	</sql>
+
+</mapper>

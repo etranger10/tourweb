@@ -1,0 +1,277 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/common_template">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../static/css/style.css"
+	th:href="@{/css/style.css}" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap"
+	rel="stylesheet">
+<link
+	href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+	rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Anton'
+	rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Neucha'
+	rel='stylesheet' type='text/css'>
+	
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Neucha' rel='stylesheet' type='text/css'>
+	
+
+</script>
+</head>
+<body>
+
+	<div align="center" layout:fragment="content">
+	
+	<!-- 이미지 롤링 -->
+<div id="wrapper">
+      <div id="slider-wrap">
+          <ul id="slider">
+             <li>
+                <!-- <div>
+                    <h3>Slide #1</h3>
+                    <span>Sub-title #1</span>
+                </div>           -->      
+<img src="../imgs/banner1.png">
+             </li>
+             
+             <li>
+              <!--   <div>
+                    <h3>Slide #2</h3>
+                    <span>Sub-title #2</span>
+                </div> -->
+<img src="../imgs/banner2.png">
+             </li>
+             
+             <li>
+            <!--     <div>
+                    <h3>Slide #3</h3>
+                    <span>Sub-title #3</span>
+                </div> -->
+<img src="../imgs/banner3.png">
+             </li>
+             
+             <li>
+               <!--  <div>
+                    <h3>Slide #4</h3>
+                    <span>Sub-title #4</span>
+                </div> -->
+<img src="../imgs/banner4.png">
+             </li>
+          </ul>
+          
+           <!--controls-->
+          <div class="btns" id="next"><i class="fa fa-arrow-right"></i></div>
+          <div class="btns" id="previous"><i class="fa fa-arrow-left"></i></div>
+          <div id="counter"></div>
+          
+          <div id="pagination-wrap">
+            <ul>
+            </ul>
+          </div>
+          <!--controls--> 
+          <script>
+          //current position
+var pos = 0;
+//number of slides
+var totalSlides = $('#slider-wrap ul li').length;
+//get the slide width
+var sliderWidth = $('#slider-wrap').width();
+
+
+$(document).ready(function(){
+  
+  
+  /*****************
+   BUILD THE SLIDER
+  *****************/
+  //set width to be 'x' times the number of slides
+  $('#slider-wrap ul#slider').width(sliderWidth*totalSlides);
+  
+    //next slide  
+  $('#next').click(function(){
+    slideRight();
+  });
+  
+  //previous slide
+  $('#previous').click(function(){
+    slideLeft();
+  });
+  
+  
+  
+  /*************************
+   //*> OPTIONAL SETTINGS
+  ************************/
+  //automatic slider
+  var autoSlider = setInterval(slideRight, 3000);
+  
+  //for each slide 
+  $.each($('#slider-wrap ul li'), function() { 
+
+     //create a pagination
+     var li = document.createElement('li');
+     $('#pagination-wrap ul').append(li);    
+  });
+  
+  //counter
+  countSlides();
+  
+  //pagination
+  pagination();
+  
+  //hide/show controls/btns when hover
+  //pause automatic slide when hover
+  $('#slider-wrap').hover(
+    function(){ $(this).addClass('active'); clearInterval(autoSlider); }, 
+    function(){ $(this).removeClass('active'); autoSlider = setInterval(slideRight, 3000); }
+  );
+  
+  
+
+});//DOCUMENT READY
+  
+
+
+/***********
+ SLIDE LEFT
+************/
+function slideLeft(){
+  pos--;
+  if(pos==-1){ pos = totalSlides-1; }
+  $('#slider-wrap ul#slider').css('left', -(sliderWidth*pos));  
+  
+  //*> optional
+  countSlides();
+  pagination();
+}
+
+
+/************
+ SLIDE RIGHT
+*************/
+function slideRight(){
+  pos++;
+  if(pos==totalSlides){ pos = 0; }
+  $('#slider-wrap ul#slider').css('left', -(sliderWidth*pos)); 
+  
+  //*> optional 
+  countSlides();
+  pagination();
+}
+
+
+
+  
+/************************
+ //*> OPTIONAL SETTINGS
+************************/
+function countSlides(){
+  $('#counter').html(pos+1 + ' / ' + totalSlides);
+}
+
+function pagination(){
+  $('#pagination-wrap ul li').removeClass('active');
+  $('#pagination-wrap ul li:eq('+pos+')').addClass('active');
+} 
+</script>
+                 
+      </div>
+  
+   </div>
+   
+		<!-- 원본 -->
+		<div class="content " align="center">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="row1 img-part">
+							<div class="col-4">
+								<figure>
+									<div class="circle">
+										<a href="http://192.168.0.134:8090/board/read?boardNo=2">
+											<img src="../imgs/4.png">
+										</a>
+									</div>
+
+									<figcaption>
+										<h4>
+											<strong>송도 센트럴파크</strong>
+										</h4>
+										<p>꽉 막힌 교통체증이 두렵다면 바로 여기!</p>
+									</figcaption>
+								</figure>
+							</div>
+
+							<div class="col-4">
+								<figure>
+									<div class="circle">
+										<a href="http://192.168.0.134:8090/board/read?boardNo=16">
+											<img src="../imgs/1.png">
+										</a>
+									</div>
+									<figcaption>
+										<h4>
+											<strong>인천 을왕리 해수욕장</strong>
+										</h4>
+										<p>서울 근교 바다 감상지로<br>명불허전 국민관광지..</p>
+									</figcaption>
+								</figure>
+							</div>
+
+							<div class="col-4">
+								<figure>
+									<div class="circle">
+										<a href="http://192.168.0.134:8090/board/read?boardNo=17">
+											<img src="../imgs/2.png">
+										</a>
+									</div>
+									<figcaption>
+										<h4>
+											<strong>이천 별빛정원우주</strong>
+										</h4>
+										<p>별빛정원우주는 낮과 밤의 매력이<br> 다른데요.</p>
+									</figcaption>
+								</figure>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+	<script>
+    var index = 0;   //이미지에 접근하는 인덱스
+    window.onload = function(){
+        slideShow();
+    }
+    
+    function slideShow() {
+    var i;
+    var x = document.getElementsByClassName("slide1");  //slide1에 대한 dom 참조
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";   //처음에 전부 display를 none으로 한다.
+    }
+    index++;
+    if (index > x.length) {
+        index = 1;  //인덱스가 초과되면 1로 변경
+    }   
+    x[index-1].style.display = "block";  //해당 인덱스는 block으로
+    setTimeout(slideShow, 4000);   //함수를 4초마다 호출
+ 
+}
+</script>
+</body>
+</html>

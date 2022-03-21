@@ -1,0 +1,22 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/common_template">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../static/css/style.css"
+	th:href="@{/css/style.css}" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap"
+	rel="stylesheet">
+</head>
+<body>
+<div layout:fragment="content">
+	<h2>가입을 축하드립니다.</h2>
+	<a href="../auth/loginForm.html" th:href="@{/auth/login}">로그인</a>
+</div>
+</body>
+</html>

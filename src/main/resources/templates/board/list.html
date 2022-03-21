@@ -1,0 +1,90 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/common_template">
+<!-- layout:decorate="~{/layouts/main_template}"> -->
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../static/css/style.css"
+	th:href="@{/css/style.css}" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap"
+	rel="stylesheet">
+</head>
+<body>
+	<div layout:fragment="content">
+		<h2 th:text="#{board.header.list}">회원게시판 목록</h2>
+
+		<table class="boardList">
+			<tr>
+				<th class="col5" align="center" width="80" th:text="#{board.no}">번호</th>
+				<th class="col5" align="center" width="350" th:text="#{board.title}">제목</th>
+				<th class="col5" align="center" width="120"
+					th:text="#{board.writer}">작성자</th>
+				<th class="col5" align="center" width="120"
+					th:text="#{board.viewCnt}">조회수</th>
+				<th class="col5" align="center" width="180"
+					th:text="#{board.regdate}">등록일시</th>
+
+			</tr>
+
+			<tr th:if="${#lists.isEmpty(list)}">
+				<td colspan="5" th:text="#{common.listEmpty}">List is empty.</td>
+			</tr>
+
+			<tr th:each="board : ${list}">
+				<td align="center" th:text="${board.boardNo}">${board.boardNo}</td>
+				<td align="left"><a class="a_color" href="read.html"
+					th:href="@{|/board/read?boardNo=${board.boardNo}|}"
+					th:text="${board.title}">${board.title}</a></td>
+				<td align="right" th:text="${board.writer}">${board.writer}</td>
+				<td align="right" th:text="${board.viewCnt}">${board.viewCnt}</td>
+				<td align="center"
+					th:text="${#temporals.format(board.regDate, 'yyyy-MM-dd HH:mm')}"></td>
+			</tr>
+		</table>
+
+		<a class="a_color" href="register.html" th:href="@{/board/register}"
+			th:text="#{action.new}">글쓰기</a>
+
+		<form id="pgrq" action="list.html"
+			th:action="@{|/board/list${pgrq.toUriStringByPage(1)}|}"
+			th:object="${pgrq}" method="GET">
+			<select th:field="*{searchType}">
+				<option th:each="element : ${searchTypeCodeValueList}"
+					th:value="${element.value}" th:text="${element.label}">제목</option>
+			</select> <input type="text" name="keyword" th:field="*{keyword}" />
+			<button id="searchBtn" th:text="#{action.search}">검색</button>
+		</form>
+
+		<div>
+			<th:block th:if="${pagination.prev}">
+				<a class="a_color" href="list.html" th:href="@{?page={page} (page = ${pagination.startPage})}">&laquo;</a>
+			</th:block>
+
+			<th:block
+				th:each="idx: ${#numbers.sequence(pagination.startPage, pagination.endPage)}">
+				<a class="a_color" href="list.html"
+					th:href="@{|/board/list${pagination.makeQuery(idx)}|}"
+					th:text="${idx}">${idx}</a>
+			</th:block>
+
+			<th:block th:if="${pagination.next && pagination.endPage > 0}">
+				<a class="a_color" href="list.html" th:href="@{?page={page} (page = ${pagination.endPage})}">&raquo;</a>
+			</th:block>
+		</div>
+
+		<script th:inline="javascript">
+		var result = [[${msg}]];
+		
+		if (result === "SUCCESS") {
+			alert([[#{common.processSuccess}]]);
+		}
+		
+	</script>
+	</div>
+</body>
+</html>

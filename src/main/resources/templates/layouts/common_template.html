@@ -1,0 +1,63 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="/js/jQuery-2.1.4.min.js"></script>
+<link rel="stylesheet" href="../../static/css/style.css"
+	th:href="@{/css/style.css}" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap"
+	rel="stylesheet">
+</head>
+
+<body>
+
+
+	<div class="headder_fixed" align="center" th:fragment="header">
+		<div class="headder" style="margin-bottom: 0">
+			<p>여행가기 전 필수 커뮤니티</p>
+			<h1>
+				<strong>대한민국 여기저기</strong>
+			</h1>
+
+		</div>
+
+		<nav class="navbar">
+
+			<!-- <div class="nav_logo">
+				대한민국 여기저기
+				<a href="../home.html" th:href="@{/}">대한민국 여기저기</a>
+			</div> -->
+
+			<ul class="nav_menu">
+				<li><a href="../home.html" th:href="@{/}"><img src="../imgs/ham.png"></a></li>
+				<li><a href="" th:href="@{/}">공지사항</a></li>
+				<li><a href="../board/list.html" th:href="@{/board/list}">회원게시판</a>
+				<li><a href="" th:href="@{/}">맛집탐방</a></li>
+				<li><a	 href="" th:href="@{/board/list}">Q&A</a>
+					<!-- <ol class="dropdown">
+						<li><a href="#">게시판2</a></li>
+					</ol -->
+				</li>
+			</ul>
+
+			<ul class="nav_menu2">
+				<li><a href="../auth/login"><img src="../imgs/login.png"></a></li>
+				<li><a href="../user/register"><img
+						src="../imgs/membership.png"></a></li>
+			</ul>
+
+		</nav>
+	</div>
+
+
+
+	<div align="center" layout:fragment="content"></div>
+
+	<div th:replace="~{fragments/footer::footer}"></div>
+</body>
+</html>
